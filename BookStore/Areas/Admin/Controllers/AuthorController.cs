@@ -11,22 +11,22 @@ using BookStore.Models;
 namespace BookStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class AuthorController : Controller
     {
         private readonly BookStoreDbContext _context;
 
-        public CategoryController(BookStoreDbContext context)
+        public AuthorController(BookStoreDbContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Category
+        // GET: Admin/Author
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            return View(await _context.Authors.ToListAsync());
         }
 
-        // GET: Admin/Category/Details/5
+        // GET: Admin/Author/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,63 +34,62 @@ namespace BookStore.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var author = await _context.Authors
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (author == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(author);
         }
 
-        // GET: Admin/Category/Create
+        // GET: Admin/Author/Create
         public IActionResult Create()
         {
-            Category category = new Category();
-            return PartialView("_CreatePartialView", category);
+            return View();
         }
 
-        // POST: Admin/Category/Create
+        // POST: Admin/Author/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryName")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,AuthorName")] Author author)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(author);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(author);
         }
 
-        // GET: Admin/Category/Edit/5
-        public async Task<IActionResult> Update(int? id)
+        // GET: Admin/Author/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
+            var author = await _context.Authors.FindAsync(id);
+            if (author == null)
             {
                 return NotFound();
             }
-            return PartialView("_UpdatePartialView", category);
+            return View(author);
         }
 
-        // POST: Admin/Category/Edit/5
+        // POST: Admin/Author/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, [Bind("Id,CategoryName")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AuthorName")] Author author)
         {
-            if (id != category.Id)
+            if (id != author.Id)
             {
                 return NotFound();
             }
@@ -99,12 +98,12 @@ namespace BookStore.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(author);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!AuthorExists(author.Id))
                     {
                         return NotFound();
                     }
@@ -115,10 +114,10 @@ namespace BookStore.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(author);
         }
 
-        // GET: Admin/Category/Delete/5
+        // GET: Admin/Author/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +125,30 @@ namespace BookStore.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var author = await _context.Authors
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (author == null)
             {
                 return NotFound();
             }
 
-            return PartialView("_DeletePartialView", category);
+            return View(author);
         }
 
-        // POST: Admin/Category/Delete/5
+        // POST: Admin/Author/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(category);
+            var author = await _context.Authors.FindAsync(id);
+            _context.Authors.Remove(author);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool AuthorExists(int id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            return _context.Authors.Any(e => e.Id == id);
         }
     }
 }
