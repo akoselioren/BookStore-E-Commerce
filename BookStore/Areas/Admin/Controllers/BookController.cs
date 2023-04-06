@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Data;
 using BookStore.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace BookStore.Areas.Admin.Controllers
 {
@@ -14,11 +16,14 @@ namespace BookStore.Areas.Admin.Controllers
     public class BookController : Controller
     {
         private readonly BookStoreDbContext _context;
+        private readonly IWebHostEnvironment _environment;
 
-        public BookController(BookStoreDbContext context)
+        public BookController(BookStoreDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
+
 
         // GET: Admin/Book
         public async Task<IActionResult> Index()
@@ -52,6 +57,7 @@ namespace BookStore.Areas.Admin.Controllers
         {
             ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "AuthorName");
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "CategoryName");
+   
             return View();
         }
 
@@ -60,16 +66,35 @@ namespace BookStore.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryId,AuthorId,Title,PageCount,PublishDate,Description,ImagePath,ReadCount,Price,IsStock,IsActive")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,CategoryId,AuthorId,Title,PageCount,PublishDate,Description,ImagePath,Price,StockCount,SellCount,IsActive")] Book book)
         {
             if (ModelState.IsValid)
             {
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count>0)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(_environment.WebRootPath, @"img\Books");
+                    var ext = Path.GetExtension(files[0].FileName);
+                    if (book.ImagePath!=null)
+                    {
+                        var imagepath = Path.Combine(_environment.WebRootPath, book.ImagePath.TrimStart('\\'));
+                        if (System.IO.File.Exists(imagepath))
+                        {
+                            System.IO.File.Delete(imagepath);
+                        }
+                    }
+                    using (var fileStreams=new FileStream(Path.Combine(uploads, fileName +ext),FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStreams);
+                    }
+                    book.ImagePath=@"\img\Books\" +fileName+ext;
+                }
                 _context.Add(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "AuthorName", book.AuthorId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "CategoryName", book.CategoryId);
             return View(book);
         }
 
@@ -96,35 +121,37 @@ namespace BookStore.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoryId,AuthorId,Title,PageCount,PublishDate,Description,ImagePath,ReadCount,Price,IsStock,IsActive")] Book book)
+        public async Task<IActionResult> Edit( Book book)
         {
-            if (id != book.Id)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
-                try
+              
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count>0)
                 {
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BookExists(book.Id))
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(_environment.WebRootPath, @"img\Books");
+                    var ext = Path.GetExtension(files[0].FileName);
+                    if (book.ImagePath!=null)
                     {
-                        return NotFound();
+                        var imagepath = Path.Combine(_environment.WebRootPath, book.ImagePath.TrimStart('\\'));
+                        if (System.IO.File.Exists(imagepath))
+                        {
+                            System.IO.File.Delete(imagepath);
+                        }
                     }
-                    else
+                    using (var fileStreams=new FileStream(Path.Combine(uploads, fileName +ext),FileMode.Create))
                     {
-                        throw;
+                        files[0].CopyTo(fileStreams);
                     }
+                    book.ImagePath=@"\img\Books\" +fileName+ext;
+                    
                 }
+                _context.Update(book);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "AuthorName", book.AuthorId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "CategoryName", book.CategoryId);
             return View(book);
         }
 
@@ -145,7 +172,7 @@ namespace BookStore.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(book);
+            return PartialView("_DeleteBookPartialView", book);
         }
 
         // POST: Admin/Book/Delete/5
@@ -154,6 +181,11 @@ namespace BookStore.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var book = await _context.Books.FindAsync(id);
+            var imagepath = Path.Combine(_environment.WebRootPath, book.ImagePath.TrimStart('\\'));
+            if (System.IO.File.Exists(imagepath))
+            {
+                System.IO.File.Delete(imagepath);
+            }
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -5,92 +5,95 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PageCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublishDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReadCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsStock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PageCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReadCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsStock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.AuthorName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<div class="container">
+    <p style="text-align:right;">
+        <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Kitap Ekle</a>
+    </p>
+    <table class="table table-striped table-bordered" id="myTable">
+        <thead>
+            <tr>
+                <th style="text-align:center;">Resim</th>
+                <th style="text-align:center;">Kitap Adı</th>
+                <th style="text-align:center;">Yayın Tarihi</th>
+                <th style="text-align:center;">Stokta mı ?</th>
+                <th style="text-align:center;">Stok Adet</th>
+                <th style="text-align:center;">Aktif/Pasif</th>
+                <th style="text-align:center;">Detay</th>
+                <th style="text-align:center;">Güncelle</th>
+                <th style="text-align:center;">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.ImagePath == null)
+                        {
+                            <img src="~/img/Image/resim-yok.png" width="100" height="80" />
+                        }
+                        else
+                        {
+                            <img src="@item.ImagePath" width="100" height="80" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(modelItem => item.PublishDate, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @if (item.StockCount <= 0)
+                        {
+                            <label class="btn btn-danger"> Stok Dışı</label>
+                            item.IsActive = false;
+                        }
+                        else
+                        {
+                            <label class="btn btn-success">Stokta</label>
+                        }
+                    </td>
+                    <td>
+                        <p> @Html.DisplayFor(modelItem => item.StockCount) Adet</p>
+                    </td>
+                    <td>
+                        @if (item.IsActive == true)
+                        {
+                            <label class="btn btn-primary">Aktif</label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-danger">Pasif</label>
+                        }
+                    </td>
+
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"> Detaylar</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success"> Güncelle</a>
+                    </td>
+                    <td align="center">
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="@("#DeleteBook-"+ item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">
+                            <i class="bi bi-trash3"></i> Sil
+                        </button>
+                        @await Html.PartialAsync("_DeleteBookPartialView",item)
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#myTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/tr.json'
+            }
+        });</script>
 }
-    </tbody>
-</table>

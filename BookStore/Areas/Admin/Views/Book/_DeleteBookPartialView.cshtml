@@ -1,0 +1,32 @@
+﻿@model BookStore.Models.Book
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteBook-@Model.Id" data-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DeleteBookLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color:red" class="modal-title fs-5" id="deleteBookLabel">Dikkat! şu anda bir Silme işlemi yapıyorsunuz!</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Delete" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="Id" />
+                        <h5> <h4>| @Model.Title |</h4> adlı Kitap'ı silmek istediğinizden eminmisiniz ?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3"></i> Sil</button>
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal"><i class="bi bi-backspace-reverse-fill"></i> Vazgeç</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

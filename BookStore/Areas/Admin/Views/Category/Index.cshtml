@@ -8,14 +8,14 @@
 <div class="container">
     <p style="text-align:right;">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategory"><i class="bi bi-plus-circle"></i> Kategori Ekle</button>
-        @await Html.PartialAsync("_CreatePartialView",new Category())
+        @await Html.PartialAsync("_CreateCategoryPartialView",new Category())
     </p>
 
     <table class="table table-striped table-bordered" id="myTable">
         <thead>
             <tr align="right">
                 <th style="padding-right: 320px">Kategori Adı</th>
-                <th style="text-align:center;">Düzenle</th>
+                <th style="text-align:center;">Güncelle</th>
                 <th style="text-align:center;">Sil</th>
             </tr>
         </thead>
@@ -28,12 +28,12 @@
                     </td>
                     <td align="center">
                         <button type="button"  class="btn btn-outline-success" data-toggle="modal" data-target="@("#UpdateCategory-"+ item.Id)" data-url="@Url.Action($"Update/{item.Id}")"><i class="bi bi-pencil-square"></i> Güncelle</button>
-                        @await Html.PartialAsync("_UpdatePartialView",item)
+                        @await Html.PartialAsync("_UpdateCategoryPartialView",item)
                     </td>
                     <td align="center">
                         <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="@("#DeleteCategory-"+ item.Id)" data-url="@Url.Action($"Delete/{item.Id}")"><i class="bi bi-trash3"></i> Sil
                         </button>
-                        @await Html.PartialAsync("_DeletePartialView",item)
+                        @await Html.PartialAsync("_DeleteCategoryPartialView",item)
                     </td>
                 </tr>
             }

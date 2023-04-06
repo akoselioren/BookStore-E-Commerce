@@ -48,7 +48,7 @@ namespace BookStore.Areas.Admin.Controllers
         public IActionResult Create()
         {
             Category category = new Category();
-            return PartialView("_CreatePartialView", category);
+            return PartialView("_CreateCategoryPartialView", category);
         }
 
         // POST: Admin/Category/Create
@@ -80,7 +80,7 @@ namespace BookStore.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return PartialView("_UpdatePartialView", category);
+            return PartialView("_UpdateCategoryPartialView", category);
         }
 
         // POST: Admin/Category/Edit/5
@@ -133,7 +133,7 @@ namespace BookStore.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return PartialView("_DeletePartialView", category);
+            return PartialView("_DeleteCategoryPartialView", category);
         }
 
         // POST: Admin/Category/Delete/5
