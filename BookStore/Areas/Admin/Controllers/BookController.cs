@@ -9,10 +9,12 @@ using BookStore.Data;
 using BookStore.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles =UserRoles.Role_Admin)]
     public class BookController : Controller
     {
         private readonly BookStoreDbContext _context;

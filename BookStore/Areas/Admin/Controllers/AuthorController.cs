@@ -7,10 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Data;
 using BookStore.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace BookStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = UserRoles.Role_Admin)]
     public class AuthorController : Controller
     {
         private readonly BookStoreDbContext _context;

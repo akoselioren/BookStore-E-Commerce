@@ -1,4 +1,5 @@
-﻿using BookStore.Models;
+﻿using BookStore.Data;
+using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,15 +14,18 @@ namespace BookStore.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BookStoreDbContext _DbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BookStoreDbContext dbContext)
         {
             _logger = logger;
+            _DbContext = dbContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var books = _DbContext.Books.Where(book => (bool)book.IsActive).ToList();
+            return View(books);
         }
 
         public IActionResult Privacy()

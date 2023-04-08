@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="text-primary">Kullanıcı Listesi</h2>
+    </div>
+    <div class="col-md-6">
+        <p style="text-align:right;">
+            <a class="btn btn-primary " style="" asp-area="Identity" asp-page="/Account/Register"><i class="bi bi-person-fill-add"></i> Kullanıcı Ekle</a>
+        </p>
+    </div>
+    <table class="table table-striped table-bordered" id="myTable">
+        <thead>
+            <tr align="right">
+                <th >Kullanıcı Adı</th>
+                <th >Kullanıcı Soyadı</th>
+                <th >Kullanıcı Email</th>
+                <th >Kullanıcı Role</th>
+                <th style="text-align:center;">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td align="center">
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="@("#DeleteUser-"+ item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">
+                            <i class="bi bi-trash3"></i> Sil
+                        </button>
+                        @await Html.PartialAsync("_DeleteUserPartialView",item)
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#myTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/tr.json'
+            }
+        });</script>
+}

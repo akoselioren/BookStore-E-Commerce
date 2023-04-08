@@ -1,9 +1,11 @@
 using BookStore.Data;
+using BookStore.Email;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,9 +34,23 @@ namespace BookStore
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddIdentity<IdentityUser,IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<BookStoreDbContext>();
-            services.AddControllersWithViews();
+            services.AddSingleton<IEmailSender,EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddRazorPages();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "552826744468-n3kdnvetivvgl9v7jagha4q9ekb6lhht.apps.googleusercontent.com";
+                options.ClientSecret = "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";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

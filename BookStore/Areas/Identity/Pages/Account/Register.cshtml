@@ -1,0 +1,110 @@
+﻿@page
+@model RegisterModel
+@using BookStore.Models
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4 style="text-align:center; color:green;">Kayıt Ol</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label><b>Adınız :</b></label>
+                <input asp-for="Input.Name" class="form-control" placeholder="Adınızı giriniz.." />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Soyadınız :</b></label>
+                <input asp-for="Input.Surname" class="form-control" placeholder="Soyadınızı giriniz.." />
+                <span asp-validation-for="Input.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Email :</b></label>
+                <input asp-for="Input.Email" class="form-control" placeholder="Email giriniz.." />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Telefon Numarası :</b></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="(555) 444 33 22" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Şehir :</b></label>
+                <input asp-for="Input.City" class="form-control" placeholder="Şehir giriniz.." />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>İlçe :</b></label>
+                <input asp-for="Input.District" class="form-control" placeholder="İlçe giriniz.." />
+                <span asp-validation-for="Input.District" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Açık Adres :</b></label>
+                <input asp-for="Input.Adress" type="text" class="form-control" placeholder="Açık Adresinizi giriniz.." />
+                <span asp-validation-for="Input.Adress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Posta Kodu :</b></label>
+                <input asp-for="Input.PostCode" class="form-control" placeholder="Posta Kodu giriniz.." />
+                <span asp-validation-for="Input.PostCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Şifrenizi Giriniz :</b></label>
+                <input asp-for="Input.Password" class="form-control" placeholder="Şifrenizi giriniz.." />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label><b>Şifrenizi Tekrar :</b></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Şifrenizi tekrar giriniz.." />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            @* Kullanıcı eklerken Admin Rolu ile sistemde authorized=Admin ise burada rol seçerek ekleme yapabiliyor.*@
+            @if (User.IsInRole(UserRoles.Role_Admin))
+            {
+                <div class="form-group">
+                    @Html.DropDownListFor(x=>x.Input.Role,Model.Input.RoleList,"Kullanıcı Rolu Seçin",new {@class="form-control"})
+                </div>
+            }
+            <button type="submit" class="btn btn-success form-control"><i class="bi bi-person-fill-add"></i> Üye Ol</button>
+        </form>
+        <br />
+        <section>
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-success" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+      
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
