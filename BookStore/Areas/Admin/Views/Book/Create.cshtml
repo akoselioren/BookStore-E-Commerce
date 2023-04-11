@@ -52,6 +52,13 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+           <div class="form-group">
+                <label asp-for="IsActive" class="control-label">Stok Durumu</label>
+                <select asp-for="IsActive" class="form-select" aria-label="Stok Durumu">
+                    <option value="True" selected>Stokta Var</option>
+                    <option value="False">Stokta Yok</option>
+                </select>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Ekle" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-primary">Liste'ye geri dön</a>

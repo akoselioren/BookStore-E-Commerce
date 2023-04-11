@@ -1,8 +1,40 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 
 <ul class="navbar-nav">
+    
+    @*Sepet(Cart) işlemleri*@
+    @if (User.Identity.IsAuthenticated && HttpContextAccessor.HttpContext.Session.GetInt32(UserRoles.SessionShoppingCart) != null)
+    {
+        <li  >
+            
+               <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-success mr-2">
+                @{
+                    var count = HttpContextAccessor.HttpContext.Session.GetInt32(UserRoles.SessionShoppingCart);
+                }
+                    <i class="bi bi-cart3"></i>
+                    (@count)
+                </a>
+            
+        </li>
+    }
+    else
+    {
+        <li  >
+            <b>
+                <a href="/Identity/Account/Login" class="btn btn-success mr-2">
+                <i class="bi bi-cart3"></i>
+                (0)
+            </a>
+            </b>
+        </li>
+    }
+
+    @*Sepet(Cart) işlemleri*@
+
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">

@@ -16,7 +16,7 @@
                 <th style="text-align:center;">Resim</th>
                 <th style="text-align:center;">Kitap Adı</th>
                 <th style="text-align:center;">Yayın Tarihi</th>
-                <th style="text-align:center;">Stokta mı ?</th>
+                <th style="text-align:center;">Stok Durumu</th>
                 <th style="text-align:center;">Stok Adet</th>
                 <th style="text-align:center;">Aktif/Pasif</th>
                 <th style="text-align:center;">Detay</th>
@@ -42,10 +42,10 @@
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>
-                        @Html.TextBoxFor(modelItem => item.PublishDate, "{0:dd/MM/yyyy}", new { @class = "form-control" })
+                        @Convert.ToDateTime(item.PublishDate).ToString("dd/MM/yyyy")
                     </td>
                     <td>
-                        @if (item.StockCount <= 0)
+                        @if (item.StockCount <= 0 || item.IsActive==false)
                         {
                             <label class="btn btn-danger"> Stok Dışı</label>
                             item.IsActive = false;

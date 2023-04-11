@@ -1,0 +1,86 @@
+﻿@model BookStore.Models.ShoppingCart
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <br />
+    <div class="row">
+        <form method="post">
+            <input type="hidden" asp-for="BookId" />
+            <div class="card mb-12">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="@Model.Book.ImagePath" class="img-fluid rounded-start" alt="..." style="height:300px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-3 text-primary">
+                                    Stok
+                                </dt>
+                                <dd class="col-sm-9">
+                                    @if (Model.Book.IsActive)
+                                    {
+                                        <label class="btn btn-success"><i class="bi bi-check2"></i> Stokta var</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="btn btn-danger disabled"><i class="bi bi-x-square"></i> Stokta yok</label>
+                                    }
+                                </dd>
+                                <dt class="col-sm-3">
+                                    Kitap Adı
+                                </dt>
+                                <dd class="col-sm-9">
+                                    @Model.Book.Title
+                                </dd>
+
+                                <dt class="col-sm-3">
+                                    Fiyat
+                                </dt>
+                                <dd class="col-sm-9">
+                                    @Model.Book.Price.ToString().00 ₺
+                                </dd>
+                                <dt class="col-sm-3">
+                                    Adet
+                                </dt>
+                                <dd class="col-sm-9">
+                                    <input asp-for="Count" class="form-control" />
+                                </dd>
+                                <dt class="col-sm-3">
+                                    Özet Açıklama
+                                </dt>
+                                <dd class="col-sm-9">
+                                    @Model.Book.Description
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-md-1">
+
+                    </div>
+                    <div class="col-md-3">
+                        <a asp-action="Index" asp-controller="Home" class="btn btn-primary form-control"><i class="bi bi-house-door"></i> Anasayfa</a>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-3">
+                        @if (Model.Book.IsActive==true)
+                        {
+                            <button type="submit" class="btn btn-success form-control"><i class="bi bi-cart4"></i> Sepete Ekle</button>
+                        }
+                        else
+                        {
+                            <label class="btn btn-danger form-control disabled"><i class="bi bi-cart4"></i> Ürün Tükendi</label>
+                        }
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

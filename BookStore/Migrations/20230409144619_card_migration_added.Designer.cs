@@ -4,14 +4,16 @@ using BookStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookStore.Migrations
 {
     [DbContext(typeof(BookStoreDbContext))]
-    partial class BookStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230409144619_card_migration_added")]
+    partial class card_migration_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,13 +56,13 @@ namespace BookStore.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<int>("PageCount")
                         .HasColumnType("int");
 
-                    b.Property<double>("Price")
+                    b.Property<double?>("Price")
                         .HasColumnType("float");
 
                     b.Property<DateTime>("PublishDate")
@@ -182,7 +184,7 @@ namespace BookStore.Migrations
                     b.ToTable("OrderHeaders");
                 });
 
-            modelBuilder.Entity("BookStore.Models.ShoppingCart", b =>
+            modelBuilder.Entity("BookStore.Models.ShoppingCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -207,7 +209,7 @@ namespace BookStore.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCards");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -486,7 +488,7 @@ namespace BookStore.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("BookStore.Models.ShoppingCart", b =>
+            modelBuilder.Entity("BookStore.Models.ShoppingCard", b =>
                 {
                     b.HasOne("BookStore.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

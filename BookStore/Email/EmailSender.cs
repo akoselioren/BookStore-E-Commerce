@@ -13,7 +13,7 @@ namespace BookStore.Email
             var client = new SendGridClient(Options.SendGridKey);
             var message = new SendGridMessage()
             {
-                From = new EmailAddress("abdullah@abdullahggmnail.com", "Üyelik Onay Link'i"),
+                From = new EmailAddress("abdullahoren2@hotmail.com", " BookStore Üyelik Onay Link'i"),
                 Subject = subject,
                 PlainTextContent = htmlMessage,
                 HtmlContent = htmlMessage

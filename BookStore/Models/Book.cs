@@ -17,10 +17,10 @@ namespace BookStore.Models
         public DateTime PublishDate { get; set; }
         public string Description { get; set; }
         public string ImagePath { get; set; }
-        public double? Price { get; set; }
-        public int StockCount { get; set; } = 100;
+        public double Price { get; set; }
+        public int StockCount { get; set; }
         public int SellCount { get; set; } = 0;
-        public bool? IsActive { get; set; } = true;
+        public bool IsActive { get; set; } = true;
         public Category Category  { get; set;}
         public Author Author  { get; set;}
     }

@@ -1,5 +1,7 @@
 ﻿@using BookStore.Models
 
+
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -28,9 +30,9 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                       
-                            @if (User.IsInRole(UserRoles.Role_Admin))
-                            {
+
+                        @if (User.IsInRole(UserRoles.Role_Admin))
+                        {
                             <li class="nav-item dropdown">
                                 <button class="btn btn-outline-primary" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-gear"></i> Yönet <i class="bi bi-caret-down-square"></i>
@@ -43,13 +45,15 @@
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Kullanıcılar</a></li>
                                 </ul>
                             </li>
-                            }
-                           
+                        }
+                        
+
 
                         <li class="d-flex" role="search" style="padding-left: 320px">
                             <input class="form-control mr-2" type="search" placeholder="Aradığınız kitap.." aria-label="Search">
                             <button class="btn btn-outline-success mr-2" type="submit">Ara</button>
                         </li>
+                       
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

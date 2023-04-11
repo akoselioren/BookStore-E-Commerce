@@ -1,5 +1,5 @@
 ﻿@model BookStore.Models.Book
-
+@using BookStore.Models
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -60,9 +60,35 @@
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="StockCount" class="control-label">Stok Adedi girin</label>
+                <input asp-for="StockCount" class="form-control" />
+                <span asp-validation-for="StockCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Price" class="control-label">Kitap Fiyatı Girin</label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                 @if (Model.StockCount>0)
+                {
+                    <label asp-for="IsActive" class="control-label">Stok Durumu</label>
+                    <select asp-for="IsActive" class="form-select" aria-label="Stok Durumu">
+
+                        <option value="True" selected>Stokta Var</option>
+                        <option value="False">Stokta Yok</option>
+                    </select>
+                }
+                else
+                {
+                    <label asp-for="IsActive" class="control-label">Stok Durumu</label>
+                    <select asp-for="IsActive" class="form-select" aria-label="Stok Durumu">
+
+                        <option value="True" >Stokta Var</option>
+                        <option value="False" selected>Stokta Yok</option>
+                    </select>
+                }
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Düzenle" class="btn btn-success" />
