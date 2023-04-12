@@ -28,5 +28,15 @@ namespace BookStore.Models
         public string District { get; set; }
         [Required]
         public string PostCode { get; set; }
+        [Required]
+        public string CartName { get; set; }
+        [Required]
+        public string CartNumber { get; set; }
+        [Required]
+        public string ExpirationMonth { get; set; }
+        [Required]
+        public string ExpirationYear { get; set; }
+        [Required]
+        public string Cvc { get; set; }
     }
 }

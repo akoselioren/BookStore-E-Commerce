@@ -43,8 +43,13 @@
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="Author" asp-action="Index">Yazarlar</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="Book" asp-action="Index">Kitaplar</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Kullanıcılar</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Order" asp-action="Index">Siparişler</a></li>
                                 </ul>
                             </li>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a class="btn btn-warning" asp-area="Admin" asp-controller="Order" asp-action="Index">Siparişler</a></li>
                         }
                         
 
