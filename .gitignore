@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BookStore/appsettings.json
+/BookStore/Areas/Customer/Controllers/CartController.cs
+/BookStore/Email/EmailSender.cs
