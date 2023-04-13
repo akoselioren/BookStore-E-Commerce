@@ -35,18 +35,18 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Eski Şifreniz :")]
             public string OldPassword { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0}, en az {2} ve en fazla {1} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Yeni Şifreniz :")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Yeni şifre tekrar :")]
+            [Compare("NewPassword", ErrorMessage = "Yeni şifre ve şifre tekrar uyuşmuyor.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -91,8 +91,8 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            _logger.LogInformation("Şifreniz başarıyla değiştirildi.");
+            StatusMessage = "Şifreniz değiştirildi.";
 
             return RedirectToPage();
         }

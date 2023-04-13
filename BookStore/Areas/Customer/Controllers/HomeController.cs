@@ -24,7 +24,21 @@ namespace BookStore.Areas.Customer.Controllers
             _logger = logger;
             _DbContext = dbContext;
         }
-
+        public IActionResult Search(string q)
+        {
+            if (!string.IsNullOrEmpty(q))
+            {
+                var search = _DbContext.Books.Where(x => x.Title.Contains(q) || x.Description.Contains(q));
+                return View(search);
+            }
+            return View();
+        }
+            public IActionResult CategoryDetails(int? id)
+        {
+            var books =_DbContext.Books.Where(x => x.CategoryId == id).ToList();
+            ViewBag.categoryId = id;
+            return View(books);
+        }
         public IActionResult Index()
         {
             var books = _DbContext.Books.Where(book => (bool)book.IsActive).ToList();
@@ -46,6 +60,7 @@ namespace BookStore.Areas.Customer.Controllers
                 BookId = books.Id
 
             };
+            ViewBag.bookId= books.Id;
             return View(cart);
         }
         [HttpPost]

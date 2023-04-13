@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BookStore.Models.Book>
+ <!-- N List bar start -->
+<div class="col-md-2">
+    <div class="card" style=" text-align: center;">
+        <div class="list-group">
+            <a asp-action="Index" asp-controller="Home" class="list-group-item list-group-item-action @(ViewBag.bookId==null?"active":"")" aria-current="true">En Çok Satılanlar</a>
+            @foreach (var item in Model)
+            {
+                if (item.SellCount>3500)
+                {
+                    <a asp-action="Details" class="list-group-item list-group-item-action @(ViewBag.bookId==item.Id?"active":"")" asp-route-id="@item.Id">@item.Title</a>
+                }
+                
+            }
+
+        </div>
+    </div>
+</div>
+<!--N List bar end -->

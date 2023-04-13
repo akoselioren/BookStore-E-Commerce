@@ -1,0 +1,15 @@
+﻿@model IEnumerable<BookStore.Models.Category>
+<!-- Categories list bar start -->
+<div class="col-md-2">
+    <div class="card" style=" text-align: center;">
+        <div class="list-group">
+            <a asp-action="Index" asp-controller="Home" class="list-group-item list-group-item-action @(ViewBag.categoryId==null?"active":"")" aria-current="true">Kategoriler</a>
+            @foreach (var item in Model)
+            {
+                <a asp-action="CategoryDetails" class="list-group-item list-group-item-action @(ViewBag.categoryId==item.Id?"active":"")" asp-route-id="@item.Id">@item.CategoryName</a>
+            }
+
+        </div>
+    </div>
+</div>
+<!-- Categories list bar end -->

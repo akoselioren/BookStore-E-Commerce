@@ -35,7 +35,7 @@ namespace BookStore.Areas.Admin.Controllers
 
 
         // GET: Admin/Category/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {

@@ -9,6 +9,7 @@ using BookStore.Data;
 using BookStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using NToastNotify;
 
 namespace BookStore.Areas.Admin.Controllers
 {
@@ -17,10 +18,12 @@ namespace BookStore.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly BookStoreDbContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public CategoryController(BookStoreDbContext context)
+        public CategoryController(BookStoreDbContext context, IToastNotification toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         // GET: Admin/Category
@@ -64,6 +67,7 @@ namespace BookStore.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(category);
+                _toastNotification.AddSuccessToastMessage("Ekleme İşlemi Başarılı..");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -104,6 +108,7 @@ namespace BookStore.Areas.Admin.Controllers
                 {
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    _toastNotification.AddSuccessToastMessage("Güncelleme İşlemi Başarılı..");
                 }
                 catch (DbUpdateConcurrencyException)
                 {

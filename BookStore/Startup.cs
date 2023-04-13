@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NToastNotify;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,25 @@ namespace BookStore
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
+            {
+                CloseButton= true,
+                PositionClass=ToastPositions.TopRight,
+                PreventDuplicates=true,
+                Debug= true,
+                NewestOnTop= false,
+                ProgressBar= true,
+                ShowDuration= 300,
+                HideDuration= 1000,
+                TimeOut= 6500,
+                ExtendedTimeOut= 5000,
+                ShowEasing= "swing",
+                HideEasing= "linear",
+                ShowMethod= "fadeIn",
+                HideMethod= "fadeOut"
+
+
+            });
             services.AddIdentity<IdentityUser,IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<BookStoreDbContext>();
             services.AddSingleton<IEmailSender,EmailSender>();
