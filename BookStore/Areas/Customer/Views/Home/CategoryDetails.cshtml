@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BookStore.Models.Book>
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Web.Common;
+@model IEnumerable<BookStore.Models.Book>
 @{
     ViewData["Title"] = "CategoryDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -43,10 +46,27 @@
                         </div>
                     }
                 }
+                </div>
+                 <div class=" mt-3" style="margin-left:auto;">
+                    @Html.PagedListPager((IPagedList)Model,page=>Url.Action("Index",new {page=page}),
+                new X.PagedList.Web.Common.PagedListRenderOptions
+                {
+                ContainerDivClasses =new[] {"navigation"},
+                LiElementClasses = new[] {"page-item"},
+                PageClasses = new[] {"page-link"},
 
+                })
             </div>
         </div>
 
         @await Component.InvokeAsync("RightNBookList")
     </div>
 </div>
+
+    @section Scripts{
+        <script>
+            $(document).ready(function(){
+                $('ul.pagination > li.disabled > a ').addClass('page-link');
+            });
+        </script>
+}
