@@ -1,7 +1,7 @@
 ﻿@page
 @model DeletePersonalDataModel
 @{
-    ViewData["Title"] = "Delete Personal Data";
+    ViewData["Title"] = "Hesap silme işlemi için son işlem'desiniz !!";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
@@ -9,7 +9,7 @@
 
 <div class="alert alert-warning" role="alert">
     <p>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+        <strong>Bu verilerin silinmesi, hesabınızın kalıcı olarak kaldırılmasına neden olur ve bu durum kurtarılamaz.</strong>
     </p>
 </div>
 
@@ -19,12 +19,12 @@
         @if (Model.RequirePassword)
         {
             <div class="form-group">
-                <label asp-for="Input.Password"></label>
+                <label asp-for="Input.Password">Şifreniz :</label>
                 <input asp-for="Input.Password" class="form-control" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
         }
-        <button class="btn btn-danger" type="submit">Delete data and close my account</button>
+        <button class="btn btn-danger" type="submit">Verilerimi ve hesabımı kalıcı olarak sil.</button>
     </form>
 </div>
 

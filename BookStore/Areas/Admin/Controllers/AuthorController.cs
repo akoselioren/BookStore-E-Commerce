@@ -70,7 +70,7 @@ namespace BookStore.Areas.Admin.Controllers
         }
 
         // GET: Admin/Author/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Update(int? id)
         {
             if (id == null)
             {
@@ -90,7 +90,7 @@ namespace BookStore.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AuthorName")] Author author)
+        public async Task<IActionResult> Update(int id, [Bind("Id,AuthorName")] Author author)
         {
             if (id != author.Id)
             {

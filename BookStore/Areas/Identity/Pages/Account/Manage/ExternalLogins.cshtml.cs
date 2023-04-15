@@ -95,14 +95,14 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
             var result = await _userManager.AddLoginAsync(user, info);
             if (!result.Succeeded)
             {
-                StatusMessage = "The external login was not added. External logins can only be associated with one account.";
+                StatusMessage = "Harici oturum açma eklenmedi. Harici girişler yalnızca bir hesapla ilişkilendirilebilir.";
                 return RedirectToPage();
             }
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            StatusMessage = "Hızlı giriş eklendi.";
             return RedirectToPage();
         }
     }

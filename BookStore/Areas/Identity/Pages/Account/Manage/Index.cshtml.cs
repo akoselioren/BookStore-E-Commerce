@@ -33,7 +33,7 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefon numaranız :")]
             public string PhoneNumber { get; set; }
         }
 
@@ -82,13 +82,13 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Telefon numarasını ayarlamaya çalışırken beklenmeyen bir hata oluştu.";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Profiliniz güncellendi";
             return RedirectToPage();
         }
     }

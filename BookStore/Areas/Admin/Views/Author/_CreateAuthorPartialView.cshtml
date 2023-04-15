@@ -1,0 +1,33 @@
+﻿@model BookStore.Models.Author
+
+<!-- Modal -->
+<div class="modal fade" id="createAuthor" data-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createAuthorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color:darkblue" class="modal-title fs-5" id="createAuthorLabel"> Yazar ekleme işlemi </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        Yazar Adı Soyadı giriniz :
+                        <input asp-for="AuthorName" class="form-control" />
+                        <span asp-validation-for="AuthorName" class="text-danger"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-plus-circle"></i> Ekle</button>
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><i class="bi bi-backspace-reverse-fill"></i> Vazgeç</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

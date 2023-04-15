@@ -70,7 +70,7 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
+                throw new InvalidOperationException($" '{userId}' kimliğe sahip kullanıcı silinirken beklenmeyen bir hata oluştu.");
             }
 
             await _signInManager.SignOutAsync();

@@ -44,11 +44,11 @@
                     <td align="center">
                         @if (User.IsInRole(UserRoles.Role_Admin))
                         {
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="bi bi-pencil"></i>Düzenle</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="bi bi-pencil"></i> Durum Güncelle</a>
                         }
                         else
                         {
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="bi bi-pencil"></i>Detay</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="bi bi-pencil"></i> Detay</a>
                         }
                         
                     </td>

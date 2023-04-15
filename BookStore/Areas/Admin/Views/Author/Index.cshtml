@@ -5,32 +5,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container">
+    <p style="text-align:right;">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAuthor"><i class="bi bi-plus-circle"></i> Yazar Ekle</button>
+        @await Html.PartialAsync("_CreateAuthorPartialView",new Author())
+    </p>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AuthorName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuthorName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    <table class="table table-striped table-bordered" id="myTable">
+        <thead>
+            <tr align="right">
+                <th style="padding-right: 320px">Yazar Adı</th>
+                <th style="text-align:center;">Güncelle</th>
+                <th style="text-align:center;">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AuthorName)
+                    </td>
+                    <td align="center">
+                        <button type="button"  class="btn btn-outline-success" data-toggle="modal" data-target="@("#UpdateAuthor-"+ item.Id)" data-url="@Url.Action($"Update/{item.Id}")"><i class="bi bi-pencil-square"></i> Güncelle</button>
+                        @await Html.PartialAsync("_UpdateAuthorPartialView",item)
+                    </td>
+                    <td align="center">
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="@("#DeleteAuthor-"+ item.Id)" data-url="@Url.Action($"Delete/{item.Id}")"><i class="bi bi-trash3"></i> Sil
+                        </button>
+                        @await Html.PartialAsync("_DeleteAuthorPartialView",item)
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#myTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/tr.json'
+            }
+        });</script>
 }
-    </tbody>
-</table>
