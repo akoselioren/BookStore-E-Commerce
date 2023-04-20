@@ -9,7 +9,8 @@ namespace BookStore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Kategori adı alanı boş geçilemez.")]
+        [StringLength(45, MinimumLength = 2, ErrorMessage = "Kategori alanı min:2 - max: 45 karakter olabilir.")]
         public string CategoryName { get; set; }
         public ICollection<Book> Books { get; set; }
     }

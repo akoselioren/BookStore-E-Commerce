@@ -68,9 +68,9 @@ namespace BookStore.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryId,AuthorId,Title,PageCount,PublishDate,Description,ImagePath,Price,StockCount,SellCount,IsActive")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,CategoryId,AuthorId,Title,PageCount,PublishDate,Description,ImagePath,Price,StockCount")] Book book)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var files = HttpContext.Request.Form.Files;
                 if (files.Count>0)
@@ -183,7 +183,7 @@ namespace BookStore.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var book = await _context.Books.FindAsync(id);
-            var imagepath = Path.Combine(_environment.WebRootPath, book.ImagePath.TrimStart('\\'));
+            var imagepath = Path.Combine(_environment.WebRootPath, book.ImagePath);
             if (System.IO.File.Exists(imagepath))
             {
                 System.IO.File.Delete(imagepath);

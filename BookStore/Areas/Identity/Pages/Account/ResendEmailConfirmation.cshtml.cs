@@ -30,7 +30,7 @@ namespace BookStore.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Email alanı boş geçilemez.")]
             [EmailAddress]
             public string Email { get; set; }
         }
@@ -49,7 +49,7 @@ namespace BookStore.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                ModelState.AddModelError(string.Empty, "Doğrulama e-postası gönderildi. Lütfen emailinizi kontrol edin.");
                 return Page();
             }
 
@@ -64,9 +64,9 @@ namespace BookStore.Areas.Identity.Pages.Account
             await _emailSender.SendEmailAsync(
                 Input.Email,
                 "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                $"Lütfen hesabınızı şu tarihe kadar onaylayın: <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Onaylamak için basın</a>.");
 
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            ModelState.AddModelError(string.Empty, "Doğrulama e-postası gönderildi. Lütfen emailinizi kontrol edin.");
             return Page();
         }
     }

@@ -58,8 +58,8 @@ namespace BookStore.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Şifre Resetle",
+                    $"Lütfen şifrenizi resetlemek için <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>buraya tıklayın.</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

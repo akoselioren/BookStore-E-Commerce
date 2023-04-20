@@ -49,14 +49,14 @@
                         <div class="mb-3 row">
                             <label for="inputPassword" class="col-sm-3 col-form-label">Telefon Numarası :</label>
                             <div class="col-sm-9">
-                                <input type="text" asp-for="OrderHeader.PhoneNumber" class="form-control">
+                                <input type="text" asp-for="OrderHeader.PhoneNumber" class="form-control" placeholder="555xxxxxxx">
                                 <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputPassword" class="col-sm-3 col-form-label">Posta Kodu :</label>
                             <div class="col-sm-9">
-                                <input type="text" asp-for="OrderHeader.PostCode" class="form-control">
+                                <input type="text" asp-for="OrderHeader.PostCode" class="form-control" placeholder="xxxxx">
                                 <span asp-validation-for="OrderHeader.PostCode" class="text-danger"></span>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 }
                                 <div class="mt-5"></div>
                                 <div class="mb-3 row">
-                                    <label for="inputPassword" class="col-sm-3 col-form-label">Kart Adı :</label>
+                                    <label for="inputPassword" class="col-sm-3 col-form-label">Kart Sahibinin Adı :</label>
                                     <div class="col-sm-8">
                                         <input type="text" asp-for="OrderHeader.CartName" class="form-control">
                                         <span asp-validation-for="OrderHeader.CartName" class="text-danger"></span>
@@ -97,15 +97,15 @@
                                 </div>
                                 <div class="mb-3 row">
                                     <div class="col-sm-4">
-                                        <input type="text" asp-for="OrderHeader.ExpirationMonth" class="form-control" placeholder="Ay">
+                                        <input type="number" asp-for="OrderHeader.ExpirationMonth" class="form-control" placeholder="Ay">
                                         <span asp-validation-for="OrderHeader.ExpirationMonth" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="text" asp-for="OrderHeader.ExpirationYear" class="form-control" placeholder="Yıl">
+                                        <input type="number" asp-for="OrderHeader.ExpirationYear" class="form-control" placeholder="Yıl">
                                         <span asp-validation-for="OrderHeader.ExpirationYear" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="text" asp-for="OrderHeader.Cvc" class="form-control" placeholder="CVC">
+                                        <input type="number" asp-for="OrderHeader.Cvc" class="form-control" placeholder="CVC">
                                         <span asp-validation-for="OrderHeader.Cvc" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                             <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-primary form-control">Sepet'e geri dön</a>
                     </div>
                     <div class="col-md-4" style="margin-left:auto;">
-                        <button type="submit" class="btn btn-success form-control">Ödeme'ye geç </button>
+                        <button type="submit" class="btn btn-success form-control">Ödeme'yi tamamla ve bitir </button>
                     </div>
                 </div>
             </div>

@@ -48,15 +48,15 @@ namespace BookStore.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Email alanı boş geçilemez.")]
             [EmailAddress]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Şifre alanı boş geçilemez.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Beni Hatırla")]
             public bool RememberMe { get; set; }
         }
 
@@ -93,7 +93,7 @@ namespace BookStore.Areas.Identity.Pages.Account
                     var user = _DbContext.ApplicationUsers.FirstOrDefault(x=>x.Email==Input.Email);
                     int count = _DbContext.ShoppingCarts.Where(y => y.ApplicationUserId == user.Id).Count();
                     HttpContext.Session.SetInt32(UserRoles.SessionShoppingCart,count);
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("Kullanıcı oturum açtı.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -102,12 +102,12 @@ namespace BookStore.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("Kullanıcı hesabı kilitlendi.");
                     return RedirectToPage("./Lockout");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Geçersiz giriş denemesi.");
                     return Page();
                 }
             }

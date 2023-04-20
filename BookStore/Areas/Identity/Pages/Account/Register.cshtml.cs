@@ -55,12 +55,12 @@ namespace BookStore.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Email alanı boş geçilemez.")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Şifre alanı boş geçilemez.")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -68,16 +68,25 @@ namespace BookStore.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Parola ve onay parolası eşleşmiyor.")]
             public string ConfirmPassword { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Kullanıcı adı alanı boş geçilemez.")]
+            [StringLength(30, MinimumLength = 2, ErrorMessage = "Ad alanı min:2 - max: 30 karakter olabilir.")]
             public string Name { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Kullanıcı soyadı alanı boş geçilemez.")]
+            [StringLength(30, MinimumLength = 2, ErrorMessage = "Soyad alanı min:2 - max: 30 karakter olabilir.")]
             public string Surname { get; set; }
+            [Required(ErrorMessage = "Adres alanı boş geçilemez.")]
             public string Adress { get; set; }
+            [Required(ErrorMessage = "Şehir alanı boş geçilemez.")]
             public string City { get; set; }
+            [Required(ErrorMessage = "İlçe alanı boş geçilemez.")]
             public string District { get; set; }
+            [Required(ErrorMessage = "Posta Kodu alanı boş geçilemez.")]
+            [StringLength(5, MinimumLength = 5, ErrorMessage = "Geçersiz Posta Kodu !")]
             public string PostCode { get; set; }
+            [Required(ErrorMessage = "Telefon numarası alanı boş geçilemez.")]
+            [StringLength(10, MinimumLength = 10, ErrorMessage = "Geçersiz telefon numarası !")]
             public string PhoneNumber { get; set; }
             public string Role { get; set; }
             public IEnumerable<SelectListItem> RoleList { get; set; }
@@ -122,7 +131,7 @@ namespace BookStore.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Kullanıcı şifre ile yeni bir hesap oluşturdu.");
                     if (!await _roleManager.RoleExistsAsync(UserRoles.Role_Admin))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(UserRoles.Role_Admin));
@@ -151,8 +160,8 @@ namespace BookStore.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "E-mailinizi onaylayın",
+                        $"Lütfen hesabınızı şu tarihe kadar onaylayın: <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>onaylamak için buraya tıklayın</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

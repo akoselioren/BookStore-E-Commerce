@@ -33,17 +33,18 @@ namespace BookStore.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Eski şifre alanı boş geçilemez.")]
             [DataType(DataType.Password)]
             [Display(Name = "Eski Şifreniz :")]
             public string OldPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Yeni şifre alanı boş geçilemez.")]
             [StringLength(100, ErrorMessage = "{0}, en az {2} ve en fazla {1} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Yeni Şifreniz :")]
             public string NewPassword { get; set; }
 
+            [Required(ErrorMessage = "Yeni şifre tekrar alanı boş geçilemez.")]
             [DataType(DataType.Password)]
             [Display(Name = "Yeni şifre tekrar :")]
             [Compare("NewPassword", ErrorMessage = "Yeni şifre ve şifre tekrar uyuşmuyor.")]
