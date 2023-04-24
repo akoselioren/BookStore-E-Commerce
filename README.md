@@ -58,7 +58,7 @@ sunmuş olduğu API'yi kullanarak oluşturdum.(01:59 - 03:03)</p>
 
 <div align="center">
 
-<a href="https:https://youtu.be/vnpJnwIhDVc" target="_blank">
+<a href="https://youtu.be/vnpJnwIhDVc" target="_blank">
     <img src="https://user-images.githubusercontent.com/112801816/233843615-e1c22c7b-8d2f-4d2d-a748-6937759f4d76.png" width="810";
      height="480" />
 </a>
@@ -77,7 +77,7 @@ arama işlemini gerçekleştiriyor ve kitapların pasif olma yada stok dışı o
 
 <div align="center">
 
-<a href="https:https://youtu.be/3KXysCJVbpc" target="_blank">
+<a href="https://youtu.be/3KXysCJVbpc" target="_blank">
     <img src="https://user-images.githubusercontent.com/112801816/233843615-e1c22c7b-8d2f-4d2d-a748-6937759f4d76.png" width="810";
      height="480" />
 </a>
