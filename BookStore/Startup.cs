@@ -66,11 +66,6 @@ namespace BookStore
                 options.LogoutPath = $"/Identity/Account/Logout";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
-            services.AddAuthentication().AddGoogle(options =>
-            {
-                options.ClientId = "552826744468-n3kdnvetivvgl9v7jagha4q9ekb6lhht.apps.googleusercontent.com";
-                options.ClientSecret = "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";
-            });
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
